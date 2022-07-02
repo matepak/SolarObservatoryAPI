@@ -30,26 +30,32 @@ public class SolarDynamicObservatoryWebServiceController : ControllerBase
     /// </remarks>
 
     [HttpGet("latest")]
+    [ResponseCache(VaryByHeader = "User-Agent", Duration = 900)]
     public ActionResult<List<Product>> GetLatest()
     {
         return _dataScraper.QueryProducts();
     }
 
     [HttpGet("queryProducts/{date}")]
-    [ResponseCache(VaryByHeader = "User-Agent", Duration = 30)]
+    [ResponseCache(VaryByHeader = "User-Agent", Duration = 3600)]
     public async Task<ActionResult<List<Product>>> GetProducts(string date)
     {
-        return await _dataScraper.QueryProducts(date: date);
+        var response =  await _dataScraper.QueryProducts(date: date);
+        if (response == null) return NotFound();
+        return Ok(response);
     }
 
     [HttpGet("queryProducts/{wavelength}/{date}")]
-    [ResponseCache(VaryByHeader = "User-Agent", Duration = 30)]
+    [ResponseCache(VaryByHeader = "User-Agent", Duration = 3600)]
     public async Task<ActionResult<List<Product>>> GetProducts(string wavelength, string date)
     {
-        return await _dataScraper.QueryProducts(date: date, wavelength: wavelength);
+        var response = await _dataScraper.QueryProducts(date: date, wavelength: wavelength);
+        if (response == null) return NotFound();
+        return Ok(response);
     }
 
     [HttpGet("queryProducts/{wavelength}/{date}/{utc}/{resolution}")]
+    [ResponseCache(VaryByHeader = "User-Agent", Duration = 3600)]
     public async Task<ActionResult<List<Product>>> GetProducts(string wavelength, string date, string utc, string resolution)
     {
         return await _dataScraper.QueryProducts(date, utcTime: utc, resolution: resolution, wavelength: wavelength);

@@ -1,6 +1,6 @@
-﻿using HtmlAgilityPack;
-using SolarDynamicObservatoryWebService;
+﻿using SolarDynamicObservatoryWebService;
 using SolarDynamicObservatoryWebService.Helpers;
+using System.Text.RegularExpressions;
 
 public class SolarDynamicObservatoryDataScraper : ISolarDynamicWebObservatoryDataScraper
 {
@@ -46,14 +46,15 @@ public class SolarDynamicObservatoryDataScraper : ISolarDynamicWebObservatoryDat
 
     private async Task GetAllProductsAsync(string urlBase, string urlSubDirectory, string htmlNode)
     {
+        HttpClient client = new HttpClient();
+        var response = await client.GetAsync(urlBase + urlSubDirectory);
+        var pageContents = await response.Content.ReadAsStringAsync();
+
         Products = new List<Product>();
-        HtmlDocument document = new HtmlDocument();
-        document.LoadHtml(await GetPageAsync(urlBase + urlSubDirectory));
-        var htmlNodes = document.DocumentNode.SelectNodes(htmlNode);
-        foreach (var node in htmlNodes)
+        string pattern = @"(?<=\"")(?:\d+_){3}\w+";
+        foreach (Match match in Regex.Matches(pageContents, pattern, RegexOptions.Multiline))
         {
-            if (char.IsLetter(node.InnerText[0])) continue;
-            Products.Add(Deserialize(node.InnerText));
+            Products.Add(Deserialize(match.Value));
         }
     }
 
@@ -61,12 +62,11 @@ public class SolarDynamicObservatoryDataScraper : ISolarDynamicWebObservatoryDat
     {
         Product Product = new Product();
         string[] prod = product.Split(delimiter, StringSplitOptions.RemoveEmptyEntries);
-        int fileExtension = prod[3].Length - 4;
         Product.Date = prod[0];
         Product.UtcTime = prod[1];
         Product.Resolution = prod[2];
-        Product.Wavelength = prod[3].Remove(fileExtension);
-        Product.Url = UrlBase + UrlSubDirectory(prod[0]) + product;
+        Product.Wavelength = prod[3];
+        Product.Url = UrlBase + UrlSubDirectory(prod[0]) + product + ".jpg";
         return Product;
     }
 

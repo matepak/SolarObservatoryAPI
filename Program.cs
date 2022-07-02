@@ -22,17 +22,20 @@ builder.Services.AddScoped<ISolarDynamicWebObservatoryDataScraper>(sdo =>
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
-{ 
+{
+    app.UseExceptionHandler("/error-development");
     app.UseSwagger();
     app.UseSwaggerUI(config =>
     {
-        //config.ConfigObject.AdditionalItems["syntaxHighlight"] = new Dictionary<string, object>
-        //{
-        //    ["activated"] = false
-        //};
+        config.ConfigObject.AdditionalItems["syntaxHighlight"] = new Dictionary<string, object>
+        {
+            ["activated"] = false
+        };
     });
+} else
+{
+    app.UseExceptionHandler("/error");
 }
-
 app.UseResponseCaching();
 app.UseHttpsRedirection();
 app.UseAuthorization();
