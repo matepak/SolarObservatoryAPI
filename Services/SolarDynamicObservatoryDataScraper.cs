@@ -72,10 +72,10 @@ public class SolarDynamicObservatoryDataScraper : ISolarDynamicWebObservatoryDat
 
     private string UrlSubDirectory(string date)
     {
+        if (date.Length != 8) return "";
         string year = date.Substring(0, 4);
         string month = date.Substring(4, 2);
         string day = date.Substring(6, 2);
         return year + "/" + month + "/" + day + "/";
     }
-
 }
