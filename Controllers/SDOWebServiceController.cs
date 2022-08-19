@@ -26,7 +26,19 @@ public class SolarDynamicObservatoryWebServiceController : ControllerBase
     ///
     /// </returns>
     /// <remarks>
+    /// Sample request:
     /// 
+    ///     GET /api/latest
+    ///
+    ///     {
+    ///         "date": "",
+    ///         "utcTime": "",
+    ///         "resolution": "2048",
+    ///         "wavelength": "0094",
+    ///         "url": "https://sdo.gsfc.nasa.gov/assets/img/latest/latest_2048_0094.jpg"
+    ///     }
+    ///     ...
+    ///       
     /// </remarks>
 
     [HttpGet("latest")]
@@ -35,6 +47,29 @@ public class SolarDynamicObservatoryWebServiceController : ControllerBase
     {
         return _dataScraper.QueryProducts();
     }
+
+    ///<summary>
+    /// Query products by date
+    /// </summary>
+    /// <returns>
+    ///
+    /// </returns>
+    /// <remarks>
+    /// Sample request:
+    /// 
+    ///     GET /api/queryProducts/20220819
+    ///
+    ///     {
+    ///         "date": "20220819",
+    ///         "utcTime": "000000",
+    ///         "resolution": "1024",
+    ///         "wavelength": "HMIB",
+    ///         "url": "https://sdo.gsfc.nasa.gov/assets/img/browse/2022/08/19/20220819_000000_1024_HMIB.jpg"
+    ///     }
+    ///     ...
+    ///       
+    /// </remarks>
+
 
     [HttpGet("queryProducts/{date}")]
     [ResponseCache(VaryByHeader = "User-Agent", Duration = 3600)]
