@@ -28,7 +28,7 @@ GET api.sdodata.com/v1/latest
 ]
 ```
 ```
-GET /api/queryProducts/20220819
+GET /v1/queryProducts/20220819
 ```
 ```json
 {
