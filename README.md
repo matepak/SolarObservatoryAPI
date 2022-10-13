@@ -27,3 +27,16 @@ GET api.sdodata.com/v1/latest
   ...
 ]
 ```
+```
+GET /api/queryProducts/20220819
+```
+```json
+{
+    "date": "20220819",
+    "utcTime": "000000",
+    "resolution": "1024",
+    "wavelength": "HMIB",
+    "url": "https://sdo.gsfc.nasa.gov/assets/img/browse/2022/08/19/20220819_000000_1024_HMIB.jpg"
+}
+...
+```
