@@ -5,7 +5,7 @@ using System.Text.Json;
 namespace SolarDynamicObservatoryWebService.Controllers;
 
 [ApiController]
-[Route("api/")]
+[Route("/v1")]
 public class SolarDynamicObservatoryWebServiceController : ControllerBase
 {
     private readonly ILogger _logger;
@@ -40,7 +40,6 @@ public class SolarDynamicObservatoryWebServiceController : ControllerBase
     ///     ...
     ///       
     /// </remarks>
-
     [HttpGet("latest")]
     [ResponseCache(VaryByHeader = "User-Agent", Duration = 900)]
     public ActionResult<List<Product>> GetLatest()
