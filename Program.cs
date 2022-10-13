@@ -24,7 +24,6 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/error-development");
-    app.UseSwagger();
     app.UseSwaggerUI(config =>
     {
         config.ConfigObject.AdditionalItems["syntaxHighlight"] = new Dictionary<string, object>
@@ -36,6 +35,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/error");
 }
+app.UseSwagger();
 app.UseResponseCaching();
 app.UseHttpsRedirection();
 app.UseAuthorization();
