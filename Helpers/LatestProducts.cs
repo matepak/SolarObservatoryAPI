@@ -9,7 +9,7 @@ namespace SolarDynamicObservatoryWebService.Helpers
         private static readonly string baseUrl =
             @"https://sdo.gsfc.nasa.gov/assets/img/latest/latest_";
         private static readonly string[] _resolutions =
-            new string[] { "2048", "1024", "512" };
+            new string[] { "4096", "2048", "1024", "512" };
         private static readonly string[] _waveLenghts =
             new string[] { "0094","0131","0171","0193","0211","0304","0335","1600",
             "1700","HMIB","HMII","HMID","HMIBC","HMIIF","HMIIC"
