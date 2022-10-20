@@ -6,23 +6,14 @@ namespace SolarDynamicObservatoryWebService.Helpers
 {
     public class LatestProducts
     {
-        private static readonly string baseUrl =
-            @"https://sdo.gsfc.nasa.gov/assets/img/latest/latest_";
-        private static readonly string[] _resolutions =
-            new string[] { "4096", "2048", "1024", "512" };
-        private static readonly string[] _waveLenghts =
-            new string[] { "0094","0131","0171","0193","0211","0304","0335","1600",
-            "1700","HMIB","HMII","HMID","HMIBC","HMIIF","HMIIC"
-        };
-
         public LatestProducts() { }
         public List<Product> QueryProducts()
         {
             List<Product> products = new List<Product>();
 
-            foreach (var _resolution in _resolutions)
+            foreach (var _resolution in SdoWebQueryParams.GetResolutions)
             {
-                foreach (var _waveLenght in _waveLenghts)
+                foreach (var _waveLenght in SdoWebQueryParams.GetWaveLenghts)
                 {
                     GetLatest(products, _resolution, _waveLenght);
                 }
@@ -37,7 +28,7 @@ namespace SolarDynamicObservatoryWebService.Helpers
             product.UtcTime = "";
             product.Resolution = _resolution;
             product.Wavelength = _waveLenght;
-            product.Url = baseUrl + _resolution + "_" + _waveLenght + ".jpg";
+            product.Url = SdoWebQueryParams.GetBaseUrl + _resolution + "_" + _waveLenght + ".jpg";
             products.Add(product);
         }
     }
