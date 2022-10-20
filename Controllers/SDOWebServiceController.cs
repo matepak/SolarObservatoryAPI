@@ -35,7 +35,7 @@ public class SolarDynamicObservatoryWebServiceController : ControllerBase
     /// Returns values of all possible image wavelengt
     /// </summary>
 
-    [HttpGet("patrameters/wavelength")]
+    [HttpGet("parameters/wavelength")]
     [ResponseCache(VaryByHeader = "User-Agent", Duration = 900)]
     public JsonResult GetWaveLengths()
     {
