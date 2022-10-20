@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SolarDynamicObservatoryWebService.Helpers;
 using Swashbuckle.Swagger.Annotations;
 using System.Text.Json;
 
@@ -19,6 +20,28 @@ public class SolarDynamicObservatoryWebServiceController : ControllerBase
         _logger = logger;
         _dataScraper = dataScrapper;
     }
+    ///<summary>
+    /// Returns values of all possible image resolution
+    /// </summary>
+
+    [HttpGet("parameters/resolution")]
+    [ResponseCache(VaryByHeader = "User-Agent", Duration = 900)]
+    public JsonResult GetResolutions() 
+    {
+        return new JsonResult(new { resolutions = SdoWebQueryParams.GetResolutions  });
+    }
+
+    ///<summary>
+    /// Returns values of all possible image wavelengt
+    /// </summary>
+
+    [HttpGet("patrameters/wavelength")]
+    [ResponseCache(VaryByHeader = "User-Agent", Duration = 900)]
+    public JsonResult GetWaveLengths()
+    {
+        return new JsonResult(new { wavelengths = SdoWebQueryParams.GetWaveLenghts });
+    }
+
     ///<summary>
     /// Gets latest SDO data
     /// </summary>
@@ -47,6 +70,7 @@ public class SolarDynamicObservatoryWebServiceController : ControllerBase
         return _dataScraper.QueryProducts();
     }
 
+
     ///<summary>
     /// Query products by date
     /// </summary>
@@ -68,8 +92,7 @@ public class SolarDynamicObservatoryWebServiceController : ControllerBase
     ///     ...
     ///       
     /// </remarks>
-
-
+    /// 
     [HttpGet("queryProducts/{date}")]
     [ResponseCache(VaryByHeader = "User-Agent", Duration = 3600)]
     public async Task<ActionResult<List<Product>>> GetProducts(string date)
