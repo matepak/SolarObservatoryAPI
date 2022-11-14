@@ -40,3 +40,5 @@ GET /v1/queryProducts/20220819
 }
 ...
 ```
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://god.postman.co/run-collection/d1f2effb643372a56051?action=collection%2Fimport)
